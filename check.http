@@ -1,0 +1,22 @@
+GET http://localhost:9050/profile
+Accept: application/json
+
+###
+POST http://localhost:9050/authorise
+Content-Type: application/json
+
+{}
+
+###
+
+POST http://localhost:9050/Signup
+Content-Type: application/json
+
+{
+  "name": "yaw boatengsf Kessie",
+  "password": "skhgkssfehigheh",
+  "email": "lglfklgzk@gmail.com",
+  "phone": 44075087669967
+}
+
+###
