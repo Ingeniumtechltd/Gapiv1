@@ -1,16 +1,16 @@
 package routes
 
 import (
+	"../db"
+	"../models"
 	"encoding/json"
 	"github.com/jameskeane/bcrypt"
 	"gopkg.in/mgo.v2/bson"
 	"net/http"
-	"../db"
-	"../models"
 	"time"
 )
 
-func Signup(w http.ResponseWriter, r *http.Request)  {
+func Signup(w http.ResponseWriter, r *http.Request) {
 	user := &models.User{}
 	if !user.Validate(w, r) {
 		return
@@ -27,12 +27,12 @@ func Signup(w http.ResponseWriter, r *http.Request)  {
 
 	insertionErrors := c.Insert(&user)
 
-	if insertionErrors != nil{
+	if insertionErrors != nil {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusInternalServerError)
 		resp := map[string]interface{}{"errors": insertionErrors.Error(), "status": 0}
 		json.NewEncoder(w).Encode(resp) //nolint:errcheck
-	}else {
+	} else {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		resp := map[string]interface{}{"data": user, "status": 1}
@@ -41,9 +41,9 @@ func Signup(w http.ResponseWriter, r *http.Request)  {
 
 }
 
-func Userprofile(w http.ResponseWriter, r *http.Request)  {
+func Userprofile(w http.ResponseWriter, r *http.Request) {
 	accessToken := &models.AccessToken{}
-	if !accessToken.AuthoriseByToken(w,r) {
+	if !accessToken.AuthoriseByToken(w, r) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -53,9 +53,9 @@ func Userprofile(w http.ResponseWriter, r *http.Request)  {
 	json.NewEncoder(w).Encode(resp)
 }
 
-func LogOut(w http.ResponseWriter, r *http.Request)  {
+func LogOut(w http.ResponseWriter, r *http.Request) {
 	accessToken := &models.AccessToken{}
-	if  !accessToken.AuthoriseByToken(w,r) {
+	if !accessToken.AuthoriseByToken(w, r) {
 		return
 
 	}
@@ -64,25 +64,25 @@ func LogOut(w http.ResponseWriter, r *http.Request)  {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	resp := map[string]interface{}{"data": map[string]interface{}{"user_id":user.ID,"message": "LoggedOut Successfully"}, "status": 1}
+	resp := map[string]interface{}{"data": map[string]interface{}{"user_id": user.ID, "message": "LoggedOut Successfully"}, "status": 1}
 	json.NewEncoder(w).Encode(resp)
-	
+
 }
 
-func UserUpdate(w http.ResponseWriter, r *http.Request)  {
+func UserUpdate(w http.ResponseWriter, r *http.Request) {
 	accessToken := &models.AccessToken{}
-	if !accessToken.AuthoriseByToken(w,r){
+	if !accessToken.AuthoriseByToken(w, r) {
 		return
 	}
 	user := &models.User{}
 
-	if user.UpdateValidate( w,r, "create" ) && user.Save(w,r) {
+	if user.UpdateValidate(w, r, "create") && user.Save(w, r) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		resp := map[string]interface{}{"data": user, "status":1}
+		resp := map[string]interface{}{"data": user, "status": 1}
 		json.NewEncoder(w).Encode(resp)
 	}
-	
+
 }
 
 // APIInfo : handler function for / call
