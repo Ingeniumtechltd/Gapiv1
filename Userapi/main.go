@@ -15,7 +15,7 @@ func main() {
 	urouter.HandleFunc("/Signup", routes.Signup).Methods("POST")
 
 	//OAuth2
-	urouter.HandleFunc("/authorise",routes.Authorise).Methods("POST")
+	urouter.HandleFunc("/authorise", routes.Authorise).Methods("POST")
 	urouter.HandleFunc("/accesstoken", routes.AccessToken).Methods("POST")
 
 	//User Profile
@@ -23,11 +23,9 @@ func main() {
 	urouter.HandleFunc("/logut", routes.LogOut).Methods("GET")
 	//urouter.HandleFunc("/profile",routes.UserUpdate).Methods("PUT")
 
-
-
 	//API info
-	 urouter.HandleFunc("/", routes.ApiInfo).Methods("GET")
+	urouter.HandleFunc("/", routes.ApiInfo).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":9050", urouter))
-	
+
 }

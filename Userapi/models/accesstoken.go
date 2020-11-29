@@ -6,10 +6,10 @@ import (
 	"net/url"
 	time "time"
 
+	"../db"
 	"github.com/asaskevich/govalidator"
 	uuid "github.com/satori/go.uuid"
 	"gopkg.in/mgo.v2/bson"
-	"../db"
 )
 
 //AccessTokenRequestBody : AccessTokenRequestBody structure

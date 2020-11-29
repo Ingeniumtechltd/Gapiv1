@@ -1,11 +1,11 @@
 package models
 
 import (
+	"../db"
 	"crypto/rand"
 	"encoding/json"
 	"net/http"
 	"net/url"
-	"../db"
 	time "time"
 
 	"github.com/asaskevich/govalidator"
@@ -18,7 +18,7 @@ var user User
 
 //Authorize : Authorize structure
 type AuthoriseRequestBody struct {
-	Email string `bson:"email" json:"email"`
+	Email    string `bson:"email" json:"email"`
 	Password string `bson:"password" json:"password"`
 }
 
